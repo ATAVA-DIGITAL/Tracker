@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATAVA - Document Expiry Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --section-bg: linear-gradient(180deg, rgba(229, 193, 88, 0.05), rgba(10, 10, 10, 0.8));
+            --gold: #e5c158;
+            --gold-glow: rgba(229, 193, 88, 0.2);
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --danger: #ff4d4d;
+            --warning: #ffaa00;
+            --success: #00e676;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .main-header {
+            background: var(--section-bg);
+            border: 1px solid rgba(229, 193, 88, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--gold-glow);
+            margin-bottom: 25px;
+        }
+
+        .main-header h1 {
+            color: var(--gold);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .main-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Titles */
+        .section-title {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid var(--gold);
+            padding-left: 10px;
+        }
+
+        /* Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(229, 193, 88, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            color: var(--gold);
+            background: rgba(229, 193, 88, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .stat-numbers {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .count-expiring { color: var(--warning); }
+        .count-expired { color: var(--danger); }
+
+        /* Form and Table Split Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+
+        /* Input Form Card */
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(229, 193, 88, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            height: fit-content;
+        }
+
+        .form-card h2 {
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--gold);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* Data Table View */
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: rgba(229, 193, 88, 0.1);
+            color: var(--gold);
+            padding: 12px;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(229, 193, 88, 0.2);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-active { background: rgba(0, 230, 118, 0.15); color: var(--success); }
+        .status-expiring { background: rgba(255, 170, 0, 0.15); color: var(--warning); }
+        .status-expired { background: rgba(2ff, 77, 77, 0.15); color: var(--danger); }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            border-top: 1px solid rgba(229, 193, 88, 0.15);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .footer-brand { color: var(--gold); font-weight: bold; font-size: 0.85rem; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="main-header">
+        <h1>ATAVA DIGITAL SERVICES & TRADING</h1>
+        <p>Corporate Document & Employee Visa Expiry Tracker System</p>
+    </div>
+
+    <!-- Section: Corporate Dashboard -->
+    <div class="section-title">COMPANIES DASHBOARD</div>
+    <div class="dashboard-grid" id="company-counts">
+        <!-- JS will render company doc summaries here -->
+    </div>
+
+    <!-- Section: Employee Dashboard -->
+    <div class="section-title">EMPLOYEES DASHBOARD</div>
+    <div class="dashboard-grid" id="employee-counts">
+        <!-- JS will render employee doc summaries here -->
+    </div>
+
+    <!-- Main Section (Form Left, Data Table Right) -->
+    <div class="main-content">
+        <!-- Form -->
+        <div class="form-card">
+            <h2><i class="fa-solid fa-file-circle-plus"></i> പുതിയ റെക്കോർഡ് ചേർക്കുക</h2>
+            <form id="docForm" onsubmit="saveRecord(event)">
+                <div class="form-group">
+                    <label>വിഭാഗം (Category)</label>
+                    <select id="category" required onchange="updateDocTypes()">
+                        <option value="Company">Company Dashboard</option>
+                        <option value="Employee">Employee Dashboard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>കമ്പനി/ജീവനക്കാരന്റെ പേര് (Name)</label>
+                    <input type="text" id="name" placeholder="Enter Name" required>
+                </div>
+                <div class="form-group">
+                    <label>രേഖയുടെ ഇനം (Document Type)</label>
+                    <select id="docType" required>
+                        <!-- Dynamic Options -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>കാലാവധി തിയതി (Expiry Date)</label>
+                    <input type="date" id="expiryDate" required>
+                </div>
+                <button type="submit" class="submit-btn">SAVE RECORD</button>
+            </form>
+        </div>
+
+        <!-- Table Grid -->
+        <div class="table-card">
+            <div style="font-weight: bold; color: var(--gold); margin-bottom: 10px;"><i class="fa-solid fa-list"></i> എല്ലാ വിവരങ്ങളും (Document Master List)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Document Type</th>
+                        <th>Expiry Date</th>
+                        <th>Remaining Days</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Loaded dynamically via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-brand">ATAVA DIGITAL SERVICES & TRADING</div>
+        <div>Data Entry, Typing Works, Poster & Badge Design</div>
+        <div style="color: #fff; margin-top: 3px;">Developed by: Abdul Salam Ahsani Vazhakkad</div>
+    </div>
+</div>
+
+<script>
+    // Standard Document Types
+    const companyDocs = ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy", "FTA"];
+    const employeeDocs = ["Emirates-ID", "ILOE Insurance", "Labour Card", "Passport"];
+
+    // Load initial table data
+    let records = JSON.parse(localStorage.getItem('atava_records')) || [];
+
+    function updateDocTypes() {
+        const cat = document.getElementById('category').value;
+        const docSelect = document.getElementById('docType');
+        docSelect.innerHTML = '';
+        
+        const list = (cat === 'Company') ? companyDocs : employeeDocs;
+        list.forEach(doc => {
+            let opt = document.createElement('option');
+            opt.value = doc;
+            opt.innerText = doc;
+            docSelect.appendChild(opt);
+        });
+    }
+
+    function saveRecord(e) {
+        e.preventDefault();
+        const record = {
+            id: Date.now(),
+            category: document.getElementById('category').value,
+            name: document.getElementById('name').value,
+            docType: document.getElementById('docType').value,
+            expiryDate: document.getElementById('expiryDate').value
+        };
+
+        records.push(record);
+        localStorage.setItem('atava_records', JSON.stringify(records));
+        document.getElementById('docForm').reset();
+        updateDocTypes();
+        renderSystem();
+    }
+
+    function deleteRecord(id) {
+        if(confirm("ഈ റെക്കോർഡ് ഡിലീറ്റ് ചെയ്യണോ?")) {
+            records = records.filter(r => r.id !== id);
+            localStorage.setItem('atava_records', JSON.stringify(records));
+            renderSystem();
+        }
+    }
+
+    function renderSystem() {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+
+        // Initialize counters structure based on requirements
+        let summary = {};
+        companyDocs.forEach(d => summary[d] = { expiring: 0, expired: 0 });
+        employeeDocs.forEach(d => summary[d] = { expiring: 0, expired: 0 });
+
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        records.sort((a,b) => new Date(a.expiryDate) - new Date(b.expiryDate));
+
+        records.forEach(r => {
+            const expDate = new Date(r.expiryDate);
+            expDate.setHours(0,0,0,0);
+            
+            const diffTime = expDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let statusClass = 'status-active';
+            let statusText = 'Active';
+
+            if (diffDays < 0) {
+                statusClass = 'status-expired';
+                statusText = 'Expired';
+                if(summary[r.docType]) summary[r.docType].expired++;
+            } else if (diffDays <= 30) {
+                statusClass = 'status-expiring';
+                statusText = 'Expiring';
+                if(summary[r.docType]) summary[r.docType].expiring++;
+            }
+
+            // Append row to table
+            const row = `<tr>
+                <td>${r.category}</td>
+                <td style="font-weight:bold; color:#fff;">${r.name}</td>
+                <td><span style="color:var(--gold); font-weight:600;">${r.docType}</span></td>
+                <td>${r.expiryDate}</td>
+                <td style="font-weight:bold; color: ${diffDays < 0 ? 'var(--danger)' : (diffDays <= 30 ? 'var(--warning)' : '#fff')}">${diffDays < 0 ? 'Expired' : diffDays + ' Days'}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                <td><button class="delete-btn" onclick="deleteRecord(${r.id})"><i class="fa-solid fa-trash-can"></i></button></td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+
+        // Render Cards
+        renderDashboardCards('company-counts', companyDocs, summary, 'fa-solid fa-building-flag');
+        renderDashboardCards('employee-counts', employeeDocs, summary, 'fa-solid fa-id-card');
+    }
+
+    function renderDashboardCards(targetId, docList, summary, iconClass) {
+        const grid = document.getElementById(targetId);
+        grid.innerHTML = '';
+
+        docList.forEach(doc => {
+            const card = `<div class="stat-card">
+                <div class="stat-icon"><i class="${iconClass}"></i></div>
+                <div class="stat-info">
+                    <h3>${doc}</h3>
+                    <div class="stat-numbers">
+                        <span class="count-expiring">${summary[doc].expiring}</span>
+                        <span style="color:var(--text-muted); font-size:1rem; padding:0 3px;">|</span>
+                        <span class="count-expired">${summary[doc].expired}</span>
+                    </div>
+                    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Expiring | Expired</div>
+                </div>
+            </div>`;
+            grid.innerHTML += card;
+        });
+    }
+
+    // Startup Init
+    updateDocTypes();
+    renderSystem();
+</script>
+</body>
+</html>
