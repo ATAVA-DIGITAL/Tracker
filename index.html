@@ -3,464 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATAVA - Document Expiry Tracker</title>
+    <title>ATAVA Multi-Company Document Master</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #141414;
-            --section-bg: linear-gradient(180deg, rgba(229, 193, 88, 0.05), rgba(10, 10, 10, 0.8));
-            --gold: #e5c158;
-            --gold-glow: rgba(229, 193, 88, 0.2);
-            --text-color: #ffffff;
-            --text-muted: #aaaaaa;
-            --danger: #ff4d4d;
-            --warning: #ffaa00;
-            --success: #00e676;
+            --bg-color: #070708;
+            --card-bg: #111115;
+            --sidebar-bg: #16161f;
+            --gold: #dfb743;
+            --gold-glow: rgba(223, 183, 67, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #8e929e;
+            --border-color: rgba(223, 183, 67, 0.12);
+            --danger: #ff4a4a;
+            --warning: #ff9f1a;
+            --success: #05d55b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Top Header */
-        .main-header {
-            background: var(--section-bg);
-            border: 1px solid rgba(229, 193, 88, 0.2);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--gold-glow);
-            margin-bottom: 25px;
-        }
-
-        .main-header h1 {
-            color: var(--gold);
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .main-header p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* Section Titles */
-        .section-title {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 20px 0 10px 0;
-            border-left: 4px solid var(--gold);
-            padding-left: 10px;
-        }
-
-        /* Dashboard Grid Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px;
+        /* Premium Header */
+        .top-navbar {
+            background: linear-gradient(90deg, #111116, var(--sidebar-bg));
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 25px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            position: relative;
-            transition: 0.3s;
         }
+        .brand-zone h1 { color: var(--gold); font-size: 1.4rem; font-weight: 900; letter-spacing: 1px; }
+        .brand-zone p { font-size: 0.75rem; color: var(--text-muted); }
 
-        .stat-card:hover {
-            border-color: rgba(229, 193, 88, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .stat-icon {
-            font-size: 1.8rem;
-            color: var(--gold);
-            background: rgba(229, 193, 88, 0.1);
-            width: 50px;
-            height: 50px;
+        /* Summary Dashboard Bar */
+        .quick-summary-bar {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-        }
-
-        .stat-info h3 {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-        }
-
-        .stat-numbers {
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .count-expiring { color: var(--warning); }
-        .count-expired { color: var(--danger); }
-
-        /* Form and Table Split Layout */
-        .main-content {
-            display: grid;
-            grid-template-columns: 320px 1fr;
             gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .main-content { grid-template-columns: 1fr; }
-        }
-
-        /* Input Form Card */
-        .form-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(229, 193, 88, 0.15);
-            padding: 20px;
-            border-radius: 15px;
-            height: fit-content;
-        }
-
-        .form-card h2 {
-            font-size: 1.1rem;
-            color: var(--gold);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
+            background: #0d0d11;
+            padding: 10px 25px;
             font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            background: #000;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--gold);
-            border: none;
-            color: #000;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: #fff;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        /* Data Table View */
-        .table-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 15px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.85rem;
-        }
-
-        th {
-            background: rgba(229, 193, 88, 0.1);
-            color: var(--gold);
-            padding: 12px;
-            font-weight: 700;
-            border-bottom: 2px solid rgba(229, 193, 88, 0.2);
-        }
-
-        td {
-            padding: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
+        .summary-item { display: flex; align-items: center; gap: 6px; }
+        .summary-item.exp { color: var(--danger); font-weight: bold; }
+        .summary-item.warn { color: var(--warning); font-weight: bold; }
 
-        tr:hover {
-            background: rgba(255, 255, 255, 0.01);
+        /* Main Workspace Layout */
+        .workspace {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            flex-grow: 1;
+        }
+        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
+
+        /* Sidebar Control Panel */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .panel-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .panel-box h3 { font-size: 0.85rem; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 8px 10px; background: #09090d; border: 1px solid #2d2d37; color: #fff; border-radius: 6px; font-size: 0.8rem;
+        }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--gold); }
+        
+        .action-btn {
+            width: 100%; padding: 10px; background: var(--gold); border: none; color: #000; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: 0.2s;
+        }
+        .action-btn:hover { background: #fff; box-shadow: 0 0 10px var(--gold-glow); }
+
+        /* Data View Engine */
+        .main-view { padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .selector-row {
+            display: flex; gap: 15px; align-items: center; background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);
+        }
+        .company-dropdown {
+            padding: 10px; background: #000; color: var(--gold); font-weight: bold; border: 1px solid var(--gold); border-radius: 6px; min-width: 200px;
         }
 
-        /* Status Badges */
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
+        /* Hierarchy Cards Grid */
+        .data-section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 1100px) { .data-section-grid { grid-template-columns: 1fr; } }
+
+        .content-card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 20px;
+        }
+        .card-header-title {
+            font-size: 1rem; color: var(--gold); font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;
         }
 
-        .status-active { background: rgba(0, 230, 118, 0.15); color: var(--success); }
-        .status-expiring { background: rgba(255, 170, 0, 0.15); color: var(--warning); }
-        .status-expired { background: rgba(2ff, 77, 77, 0.15); color: var(--danger); }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-            font-size: 0.95rem;
+        /* Employee List Selector style */
+        .employee-list-group { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; }
+        .employee-item-row {
+            background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
         }
+        .employee-item-row:hover, .employee-item-row.active {
+            border-color: var(--gold); background: rgba(223, 183, 67, 0.05);
+        }
+
+        /* Modern Table styling */
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
+        th { background: rgba(255,255,255,0.02); color: var(--text-muted); padding: 10px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        
+        .badge { padding: 3px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .bg-active { background: rgba(5, 213, 91, 0.12); color: var(--success); }
+        .bg-expiring { background: rgba(255, 159, 26, 0.12); color: var(--warning); }
+        .bg-expired { background: rgba(255, 74, 74, 0.12); color: var(--danger); }
+
+        .trash-icon-btn { background: none; border: none; color: #ff4a4a; cursor: pointer; font-size: 0.85rem; }
+        .trash-icon-btn:hover { color: #ff8888; }
 
         /* Footer */
-        .footer {
-            margin-top: 40px;
-            border-top: 1px solid rgba(229, 193, 88, 0.15);
-            padding: 15px;
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        .footer-brand { color: var(--gold); font-weight: bold; font-size: 0.85rem; margin-bottom: 2px; }
+        .footer { background: #0b0b0f; border-top: 1px solid var(--border-color); padding: 12px; text-align: center; font-size: 0.7rem; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Header -->
-    <div class="main-header">
-        <h1>ATAVA DIGITAL SERVICES & TRADING</h1>
-        <p>Corporate Document & Employee Visa Expiry Tracker System</p>
-    </div>
-
-    <!-- Section: Corporate Dashboard -->
-    <div class="section-title">COMPANIES DASHBOARD</div>
-    <div class="dashboard-grid" id="company-counts">
-        <!-- JS will render company doc summaries here -->
-    </div>
-
-    <!-- Section: Employee Dashboard -->
-    <div class="section-title">EMPLOYEES DASHBOARD</div>
-    <div class="dashboard-grid" id="employee-counts">
-        <!-- JS will render employee doc summaries here -->
-    </div>
-
-    <!-- Main Section (Form Left, Data Table Right) -->
-    <div class="main-content">
-        <!-- Form -->
-        <div class="form-card">
-            <h2><i class="fa-solid fa-file-circle-plus"></i> പുതിയ റെക്കോർഡ് ചേർക്കുക</h2>
-            <form id="docForm" onsubmit="saveRecord(event)">
-                <div class="form-group">
-                    <label>വിഭാഗം (Category)</label>
-                    <select id="category" required onchange="updateDocTypes()">
-                        <option value="Company">Company Dashboard</option>
-                        <option value="Employee">Employee Dashboard</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>കമ്പനി/ജീവനക്കാരന്റെ പേര് (Name)</label>
-                    <input type="text" id="name" placeholder="Enter Name" required>
-                </div>
-                <div class="form-group">
-                    <label>രേഖയുടെ ഇനം (Document Type)</label>
-                    <select id="docType" required>
-                        <!-- Dynamic Options -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>കാലാവധി തിയതി (Expiry Date)</label>
-                    <input type="date" id="expiryDate" required>
-                </div>
-                <button type="submit" class="submit-btn">SAVE RECORD</button>
-            </form>
-        </div>
-
-        <!-- Table Grid -->
-        <div class="table-card">
-            <div style="font-weight: bold; color: var(--gold); margin-bottom: 10px;"><i class="fa-solid fa-list"></i> എല്ലാ വിവരങ്ങളും (Document Master List)</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Document Type</th>
-                        <th>Expiry Date</th>
-                        <th>Remaining Days</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Loaded dynamically via JS -->
-                </tbody>
-            </table>
+    <!-- Top Navigation -->
+    <div class="top-navbar">
+        <div class="brand-zone">
+            <h1>ATAVA DIGITAL SERVICES & TRADING</h1>
+            <p>Multi-Client Corporate Document Matrix System</p>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Quick System-Wide Counter Status Bar -->
+    <div class="quick-summary-bar">
+        <div class="summary-item"><i class="fa-solid fa-chart-pie" style="color:var(--gold)"></i> <b>ആകെ വിവരങ്ങൾ:</b> <span id="total-docs-count">0</span></div>
+        <div class="summary-item warn"><i class="fa-solid fa-triangle-exclamation"></i> കാലാവധി തീരാറായവ: <span id="total-warn-count">0</span></div>
+        <div class="summary-item exp"><i class="fa-solid fa-circle-exclamation"></i> കാലാവധി കഴിഞ്ഞവ: <span id="total-exp-count">0</span></div>
+    </div>
+
+    <!-- Main Workspace Setup -->
+    <div class="workspace">
+        
+        <!-- Left Side Control Panel for Adding Entities -->
+        <div class="sidebar">
+            <!-- 1. Add Company Info -->
+            <div class="panel-box">
+                <h3><i class="fa-solid fa-folder-plus"></i> പുതിയ കമ്പനി ചേർക്കുക</h3>
+                <form id="companyForm" onsubmit="createNewCompany(event)">
+                    <div class="form-group">
+                        <label>കമ്പനിയുടെ പേര് (Company Name)</label>
+                        <input type="text" id="newCompanyName" placeholder="e.g. ATAVA Trading" required>
+                    </div>
+                    <button type="submit" class="action-btn">ADD COMPANY</button>
+                </form>
+            </div>
+
+            <!-- 2. Add Employee Info -->
+            <div class="panel-box">
+                <h3><i class="fa-solid fa-user-plus"></i> പുതിയ ജീവനക്കാരൻ</h3>
+                <form id="employeeForm" onsubmit="createNewEmployee(event)">
+                    <div class="form-group">
+                        <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
+                        <select id="empTargetCompany" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>ജീവനക്കാരന്റെ പേര് (Employee Name)</label>
+                        <input type="text" id="newEmployeeName" placeholder="e.g. Abdul Salam" required>
+                    </div>
+                    <button type="submit" class="action-btn">ADD EMPLOYEE</button>
+                </form>
+            </div>
+
+            <!-- 3. Add Document Dates -->
+            <div class="panel-box">
+                <h3><i class="fa-solid fa-calendar-plus"></i> രേഖകൾ/തിയതികൾ ചേർക്കുക</h3>
+                <form id="docForm" onsubmit="createNewDocument(event)">
+                    <div class="form-group">
+                        <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
+                        <select id="docTargetCompany" required onchange="populateEmployeeDropdownForForm()"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>വിഭാഗം (Type Category)</label>
+                        <select id="docCategory" required onchange="toggleFormTypeView()">
+                            <option value="Company">Company Document</option>
+                            <option value="Employee">Employee Document</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="form-employee-select-wrapper" style="display:none;">
+                        <label>ജീവനക്കാരനെ തിരഞ്ഞെടുക്കുക</label>
+                        <select id="docTargetEmployee"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>രേഖയുടെ ഇനം (Doc Type)</label>
+                        <select id="documentTypeName" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>കാലാവധി തിയതി (Expiry Date)</label>
+                        <input type="date" id="expiryDate" required>
+                    </div>
+                    <button type="submit" class="action-btn">SAVE DOCUMENT</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side Data Rendering Engine -->
+        <div class="main-view">
+            
+            <!-- Global Main Selector Control -->
+            <div class="selector-row">
+                <span style="font-weight:bold; font-size:0.9rem; color:#fff;"><i class="fa-solid fa-building" style="color:var(--gold)"></i> കറന്റ് വർക്കിങ് കമ്പനി:</span>
+                <select id="globalCompanySelector" class="company-dropdown" onchange="syncWorkspaceDisplay()">
+                    <!-- Dyn Loaded -->
+                </select>
+            </div>
+
+            <!-- Double Matrix Grid System -->
+            <div class="data-section-grid">
+                
+                <!-- Box A: Company Specific Official Certificates -->
+                <div class="content-card">
+                    <div class="card-header-title">
+                        <span><i class="fa-solid fa-file-shield"></i> കമ്പനി രേഖകൾ (Company Documents)</span>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Document Type</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyDocsTableBody">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Box B: Employee Management Matrix -->
+                <div class="content-card">
+                    <div class="card-header-title">
+                        <span><i class="fa-solid fa-users"></i> ജീവനക്കാരുടെ പട്ടിക (Employees)</span>
+                    </div>
+                    <div class="employee-list-group" id="employeeSidebarList">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Row: Dynamic Selected Employee Specific Dates Grid -->
+            <div class="content-card" id="employeeDocsDeepDiveSection" style="display:none;">
+                <div class="card-header-title" style="color:#fff;">
+                    <span><i class="fa-solid fa-address-card" style="color:var(--gold)"></i> <span id="selectedEmployeeNameHeader">--</span> എന്നയാളുടെ രേഖകൾ</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Document Type</th>
+                            <th>Expiry Date</th>
+                            <th>Days Left</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeDocsTableBody">
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer System -->
     <div class="footer">
-        <div class="footer-brand">ATAVA DIGITAL SERVICES & TRADING</div>
-        <div>Data Entry, Typing Works, Poster & Badge Design</div>
-        <div style="color: #fff; margin-top: 3px;">Developed by: Abdul Salam Ahsani Vazhakkad</div>
+        <div style="color:var(--gold); font-weight:bold; font-size:0.8rem; margin-bottom:2px;">ATAVA DIGITAL SERVICES & TRADING</div>
+        <div>Data Entry • Typing Systems • Digital Badge & Document Identity Architecture</div>
     </div>
-</div>
 
 <script>
-    // Standard Document Types
-    const companyDocs = ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy", "FTA"];
-    const employeeDocs = ["Emirates-ID", "ILOE Insurance", "Labour Card", "Passport"];
+    // System Schema Definitions
+    const baseCompanyDocTypes = ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy Contract", "FTA Registration"];
+    const baseEmployeeDocTypes = ["Emirates-ID", "Passport Pack", "Labour Card", "ILOE Insurance Scheme"];
 
-    // Load initial table data
-    let records = JSON.parse(localStorage.getItem('atava_records')) || [];
+    // Main Relational DB State initialized from LocalStorage
+    let database = JSON.parse(localStorage.getItem('atava_relational_db')) || {
+        companies: [],   // Array of { id, name }
+        employees: [],   // Array of { id, companyId, name }
+        documents: []    // Array of { id, companyId, employeeId (null for corporate), docType, expiryDate }
+    };
 
-    function updateDocTypes() {
-        const cat = document.getElementById('category').value;
-        const docSelect = document.getElementById('docType');
-        docSelect.innerHTML = '';
-        
-        const list = (cat === 'Company') ? companyDocs : employeeDocs;
-        list.forEach(doc => {
-            let opt = document.createElement('option');
-            opt.value = doc;
-            opt.innerText = doc;
-            docSelect.appendChild(opt);
+    let selectedEmployeeId = null;
+
+    // Save state helper
+    function commitToDisk() {
+        localStorage.setItem('atava_relational_db', JSON.stringify(database));
+        calculateGlobalStats();
+    }
+
+    function createNewCompany(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('newCompanyName');
+        const comp = { id: 'c_' + Date.now(), name: nameInput.value.trim() };
+        database.companies.push(comp);
+        commitToDisk();
+        nameInput.value = '';
+        syncDropdownConfigurations();
+        document.getElementById('globalCompanySelector').value = comp.id;
+        syncWorkspaceDisplay();
+    }
+
+    function createNewEmployee(e) {
+        e.preventDefault();
+        const targetComp = document.getElementById('empTargetCompany').value;
+        const nameInput = document.getElementById('newEmployeeName');
+        if(!targetComp) return alert("ദയവായി ഒരു കമ്പനി നിർമ്മിക്കുക/തിരഞ്ഞെടുക്കുക");
+
+        const emp = { id: 'e_' + Date.now(), companyId: targetComp, name: nameInput.value.trim() };
+        database.employees.push(emp);
+        commitToDisk();
+        nameInput.value = '';
+        syncWorkspaceDisplay();
+        populateEmployeeDropdownForForm();
+    }
+
+    function toggleFormTypeView() {
+        const cat = document.getElementById('docCategory').value;
+        const wrapper = document.getElementById('form-employee-select-wrapper');
+        wrapper.style.display = (cat === 'Employee') ? 'block' : 'none';
+        populateDocTypeOptions();
+    }
+
+    function populateDocTypeOptions() {
+        const cat = document.getElementById('docCategory').value;
+        const select = document.getElementById('documentTypeName');
+        select.innerHTML = '';
+        const items = (cat === 'Company') ? baseCompanyDocTypes : baseEmployeeDocTypes;
+        items.forEach(d => {
+            select.innerHTML += `<option value="${d}">${d}</option>`;
         });
     }
 
-    function saveRecord(e) {
+    function populateEmployeeDropdownForForm() {
+        const compId = document.getElementById('docTargetCompany').value;
+        const select = document.getElementById('docTargetEmployee');
+        select.innerHTML = '';
+        const filtered = database.employees.filter(e => e.companyId === compId);
+        filtered.forEach(e => {
+            select.innerHTML += `<option value="${e.id}">${e.name}</option>`;
+        });
+    }
+
+    function createNewDocument(e) {
         e.preventDefault();
-        const record = {
-            id: Date.now(),
-            category: document.getElementById('category').value,
-            name: document.getElementById('name').value,
-            docType: document.getElementById('docType').value,
+        const compId = document.getElementById('docTargetCompany').value;
+        const cat = document.getElementById('docCategory').value;
+        const empId = (cat === 'Employee') ? document.getElementById('docTargetEmployee').value : null;
+        
+        if(cat === 'Employee' && !empId) {
+            return alert("ആദ്യം ഈ കമ്പനിയിൽ ഒരു ജീവനക്കാരനെ നിർമ്മിക്കുക!");
+        }
+
+        const doc = {
+            id: 'd_' + Date.now(),
+            companyId: compId,
+            employeeId: empId,
+            docType: document.getElementById('documentTypeName').value,
             expiryDate: document.getElementById('expiryDate').value
         };
 
-        records.push(record);
-        localStorage.setItem('atava_records', JSON.stringify(records));
-        document.getElementById('docForm').reset();
-        updateDocTypes();
-        renderSystem();
+        database.documents.push(doc);
+        commitToDisk();
+        document.getElementById('expiryDate').value = '';
+        syncWorkspaceDisplay();
     }
 
-    function deleteRecord(id) {
-        if(confirm("ഈ റെക്കോർഡ് ഡിലീറ്റ് ചെയ്യണോ?")) {
-            records = records.filter(r => r.id !== id);
-            localStorage.setItem('atava_records', JSON.stringify(records));
-            renderSystem();
+    function deleteDocument(id) {
+        if(confirm("ഈ ഡോക്യുമെന്റ് സിസ്റ്റത്തിൽ നിന്നും നീക്കം ചെയ്യണോ?")) {
+            database.documents = database.documents.filter(d => d.id !== id);
+            commitToDisk();
+            syncWorkspaceDisplay();
         }
     }
 
-    function renderSystem() {
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = '';
+    function syncDropdownConfigurations() {
+        const globalSel = document.getElementById('globalCompanySelector');
+        const empTarget = document.getElementById('empTargetCompany');
+        const docTarget = document.getElementById('docTargetCompany');
 
-        // Initialize counters structure based on requirements
-        let summary = {};
-        companyDocs.forEach(d => summary[d] = { expiring: 0, expired: 0 });
-        employeeDocs.forEach(d => summary[d] = { expiring: 0, expired: 0 });
+        const currentSelection = globalSel.value;
+
+        globalSel.innerHTML = '';
+        empTarget.innerHTML = '';
+        docTarget.innerHTML = '';
+
+        if(database.companies.length === 0) {
+            globalSel.innerHTML = '<option value="">-- No Companies --</option>';
+            return;
+        }
+
+        database.companies.sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
+            const opt = `<option value="${c.id}">${c.name}</option>`;
+            globalSel.innerHTML += opt;
+            empTarget.innerHTML += opt;
+            docTarget.innerHTML += opt;
+        });
+
+        if(currentSelection && database.companies.some(c => c.id === currentSelection)) {
+            globalSel.value = currentSelection;
+        }
+        populateEmployeeDropdownForForm();
+    }
+
+    function calculateGlobalStats() {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        let expCount = 0, warnCount = 0;
+
+        database.documents.forEach(d => {
+            const diff = Math.ceil((new Date(d.expiryDate).setHours(0,0,0,0) - today) / (1000*60*60*24));
+            if(diff < 0) expCount++;
+            else if(diff <= 30) warnCount++;
+        });
+
+        document.getElementById('total-docs-count').innerText = database.documents.length;
+        document.getElementById('total-warn-count').innerText = warnCount;
+        document.getElementById('total-exp-count').innerText = expCount;
+    }
+
+    function syncWorkspaceDisplay() {
+        const activeCompanyId = document.getElementById('globalCompanySelector').value;
+        const compTable = document.getElementById('companyDocsTableBody');
+        const empGroup = document.getElementById('employeeSidebarList');
+        
+        compTable.innerHTML = '';
+        empGroup.innerHTML = '';
+
+        if(!activeCompanyId) return;
 
         const today = new Date();
         today.setHours(0,0,0,0);
 
-        records.sort((a,b) => new Date(a.expiryDate) - new Date(b.expiryDate));
+        // 1. Load Corporate Docs
+        const corpDocs = database.documents.filter(d => d.companyId === activeCompanyId && d.employeeId === null);
+        corpDocs.sort((a,b) => new Date(a.expiryDate) - new Date(b.expiryDate)).forEach(d => {
+            const diff = Math.ceil((new Date(d.expiryDate).setHours(0,0,0,0) - today) / (1000*60*60*24));
+            let badge = `<span class="badge bg-active">Active</span>`;
+            if(diff < 0) badge = `<span class="badge bg-danger">Expired</span>`;
+            else if(diff <= 30) badge = `<span class="badge bg-warning">Expiring</span>`;
 
-        records.forEach(r => {
-            const expDate = new Date(r.expiryDate);
-            expDate.setHours(0,0,0,0);
-            
-            const diffTime = expDate - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            let statusClass = 'status-active';
-            let statusText = 'Active';
-
-            if (diffDays < 0) {
-                statusClass = 'status-expired';
-                statusText = 'Expired';
-                if(summary[r.docType]) summary[r.docType].expired++;
-            } else if (diffDays <= 30) {
-                statusClass = 'status-expiring';
-                statusText = 'Expiring';
-                if(summary[r.docType]) summary[r.docType].expiring++;
-            }
-
-            // Append row to table
-            const row = `<tr>
-                <td>${r.category}</td>
-                <td style="font-weight:bold; color:#fff;">${r.name}</td>
-                <td><span style="color:var(--gold); font-weight:600;">${r.docType}</span></td>
-                <td>${r.expiryDate}</td>
-                <td style="font-weight:bold; color: ${diffDays < 0 ? 'var(--danger)' : (diffDays <= 30 ? 'var(--warning)' : '#fff')}">${diffDays < 0 ? 'Expired' : diffDays + ' Days'}</td>
-                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                <td><button class="delete-btn" onclick="deleteRecord(${r.id})"><i class="fa-solid fa-trash-can"></i></button></td>
+            compTable.innerHTML += `<tr>
+                <td style="color:var(--gold); font-weight:bold;">${d.docType}</td>
+                <td>${d.expiryDate}</td>
+                <td>${badge}</td>
+                <td><button class="trash-icon-btn" onclick="deleteDocument('${d.id}')"><i class="fa-solid fa-trash"></i></button></td>
             </tr>`;
-            tbody.innerHTML += row;
         });
+        if(corpDocs.length === 0) compTable.innerHTML = '<tr><td colspan="4" style="color:var(--text-muted); text-align:center;">രേഖകൾ ഒന്നും ചേർത്തിട്ടില്ല</td></tr>';
 
-        // Render Cards
-        renderDashboardCards('company-counts', companyDocs, summary, 'fa-solid fa-building-flag');
-        renderDashboardCards('employee-counts', employeeDocs, summary, 'fa-solid fa-id-card');
-    }
+        // 2. Load Employees Info
+        const currentEmployees = database.employees.filter(e => e.companyId === activeCompanyId);
+        currentEmployees.sort((a,b) => a.name.localeCompare(b.name)).forEach(e => {
+            const empDocs = database.documents.filter(d => d.employeeId === e.id);
+            let hasExpired = empDocs.some(d => (new Date(d.expiryDate).setHours(0,0,0,0) - today) < 0);
+            let hasWarning = empDocs.some(d => {
+                const diff = (new Date(d.expiryDate).setHours(0,0,0,0) - today);
+                return diff >= 0 && diff <= (30 * 24 * 60 * 60 * 1000);
+            });
 
-    function renderDashboardCards(targetId, docList, summary, iconClass) {
-        const grid = document.getElementById(targetId);
-        grid.innerHTML = '';
+            let flagIcon = '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>';
+            if(hasExpired) flagIcon = '<i class="fa-solid fa-circle-exclamation" style="color:var(--danger)"></i>';
+            else if(hasWarning) flagIcon = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--warning)"></i>';
 
-        docList.forEach(doc => {
-            const card = `<div class="stat-card">
-                <div class="stat-icon"><i class="${iconClass}"></i></div>
-                <div class="stat-info">
-                    <h3>${doc}</h3>
-                    <div class="stat-numbers">
-                        <span class="count-expiring">${summary[doc].expiring}</span>
-                        <span style="color:var(--text-muted); font-size:1rem; padding:0 3px;">|</span>
-                        <span class="count-expired">${summary[doc].expired}</span>
-                    </div>
-                    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Expiring | Expired</div>
+            const activeClass = (selectedEmployeeId === e.id) ? 'active' : '';
+            empGroup.innerHTML += `<div class="employee-item-row ${activeClass}" onclick="selectEmployeeView('${e.id}', '${e.name.replace(/'/g, "\\'")}')">
+                <span style="font-weight:600;"><i class="fa-solid fa-user" style="color:var(--text-muted); margin-right:6px;"></i> ${e.name}</span>
+                <div>
+                    <span style="font-size:0.7rem; color:var(--text-muted); margin-right:8px;">(${empDocs.length} Dates)</span>
+                    ${flagIcon}
                 </div>
             </div>`;
-            grid.innerHTML += card;
         });
+        if(currentEmployees.length === 0) empGroup.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:20px;">ഈ കമ്പനിയിൽ ജീവനക്കാരെ ചേർത്തിട്ടില്ല!</div>';
+
+        updateDeepDiveEmployeeTableView();
     }
 
-    // Startup Init
-    updateDocTypes();
-    renderSystem();
+    function selectEmployeeView(empId, empName) {
+        selectedEmployeeId = empId;
+        document.getElementById('selectedEmployeeNameHeader').innerText = empName;
+        
+        // Highlight active visually
+        document.querySelectorAll('.employee-item-row').forEach(el => el.classList.remove('active'));
+        syncWorkspaceDisplay();
+    }
+
+    function updateDeepDiveEmployeeTableView() {
+        const container = document.getElementById('employeeDocsDeepDiveSection');
+        const tbody = document.getElementById('employeeDocsTableBody');
+        tbody.innerHTML = '';
+
+        if(!selectedEmployeeId || !database.employees.some(e => e.id === selectedEmployeeId)) {
+            container.style.display = 'none';
+            return;
+        }
+
+        container.style.display = 'block';
+        const targetDocs = database.documents.filter(d => d.employeeId === selectedEmployeeId);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        targetDocs.sort((a,b) => new Date(a.expiryDate) - new Date(b.expiryDate)).forEach(d => {
+            const diff = Math.ceil((new Date(d.expiryDate).setHours(0,0,0,0) - today) / (1000*60*60*24));
+            
+            let badge = `<span class="badge bg-active">Active</span>`;
+            let dayText = `${diff} Days Left`;
+            if(diff < 0) {
+                badge = `<span class="badge bg-danger">Expired</span>`;
+                dayText = `Expired`;
+            } else if(diff <= 30) {
+                badge = `<span class="badge bg-warning">Expiring</span>`;
+            }
+
+            tbody.innerHTML += `<tr>
+                <td style="font-weight:bold; color:var(--gold);">${d.docType}</td>
+                <td>${d.expiryDate}</td>
+                <td style="font-weight:bold; color: ${diff < 0 ? 'var(--danger)' : (diff <= 30 ? 'var(--warning)' : '#fff')}">${dayText}</td>
+                <td>${badge}</td>
+                <td><button class="trash-icon-btn" onclick="deleteDocument('${d.id}')"><i class="fa-solid fa-trash"></i></button></td>
+            </tr>`;
+        });
+
+        if(targetDocs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">ഈ വ്യക്തിക്ക് കീഴിൽ തിയതികൾ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല!</td></tr>';
+        }
+    }
+
+    // Startup Framework Sequence
+    toggleFormTypeView();
+    syncDropdownConfigurations();
+    calculateGlobalStats();
+    if(database.companies.length > 0) {
+        syncWorkspaceDisplay();
+    }
 </script>
 </body>
 </html>
