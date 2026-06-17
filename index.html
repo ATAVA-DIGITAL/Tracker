@@ -13,15 +13,15 @@
             --gold: #c5a03b;
             --gold-glow: rgba(197, 160, 59, 0.1);
             --text-main: #2b2d42;
-            --text-muted: #6c757d;
-            --border-color: #e9ecef;
+            --text-muted: #5c5e6e; /* കുറച്ചുകൂടി തെളിഞ്ഞ കളർ */
+            --border-color: #dcdfe3;
             --danger: #dc3545;
-            --warning: #ffc107;
+            --warning: #b7791f;
             --success: #198754;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; font-size: 1.1rem; } /* ഫോണ്ട് സൈസ് കൂട്ടി */
 
         /* Login Page View */
         .login-overlay {
@@ -29,89 +29,86 @@
             background: var(--bg-color); display: flex; justify-content: center; align-items: center; z-index: 1000;
         }
         .login-box {
-            background: var(--card-bg); padding: 35px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 380px;
+            background: var(--card-bg); padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 420px;
             text-align: center; border: 1px solid var(--border-color);
         }
-        .login-box h1 { color: var(--gold); font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; }
-        .login-box p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 25px; }
+        .login-box h1 { color: var(--gold); font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; }
+        .login-box p { font-size: 1rem; color: var(--text-muted); margin-bottom: 25px; }
 
         /* Premium Top Navbar */
         .top-navbar {
             background: var(--card-bg); border-bottom: 1px solid var(--border-color);
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 30px; display: flex; justify-content: space-between; align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .brand-zone h1 { color: var(--gold); font-size: 1.3rem; font-weight: 900; letter-spacing: 0.5px; }
-        .brand-zone p { font-size: 0.75rem; color: var(--text-muted); }
-        .logout-btn { background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; color: var(--text-muted); }
+        .brand-zone h1 { color: var(--gold); font-size: 1.6rem; font-weight: 900; letter-spacing: 0.5px; }
+        .brand-zone p { font-size: 0.95rem; color: var(--text-muted); margin-top: 3px; }
+        .logout-btn { background: none; border: 2px solid var(--border-color); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: bold; color: var(--text-main); }
         .logout-btn:hover { color: var(--danger); border-color: var(--danger); }
 
         /* Dashboard Summary Strip */
         .quick-summary-bar {
-            display: flex; gap: 20px; background: #eaedf2; padding: 10px 25px; font-size: 0.8rem; border-bottom: 1px solid var(--border-color);
+            display: flex; gap: 30px; background: #eaedf2; padding: 15px 30px; font-size: 1.05rem; border-bottom: 1px solid var(--border-color);
         }
-        .summary-item { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        .summary-item { display: flex; align-items: center; gap: 8px; font-weight: 700; }
         .summary-item.exp { color: var(--danger); }
-        .summary-item.warn { color: #b7791f; }
+        .summary-item.warn { color: var(--warning); }
 
         /* Main App Grid Workspace */
-        .workspace { display: grid; grid-template-columns: 320px 1fr; flex-grow: 1; display: none; } 
-        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
+        .workspace { display: grid; grid-template-columns: 350px 1fr; flex-grow: 1; display: none; } 
+        @media (max-width: 1000px) { .workspace { grid-template-columns: 1fr; } }
 
-        .sidebar { background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .sidebar { background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 25px; display: flex; flex-direction: column; gap: 20px; }
         
         /* Modern Clean Form Fields */
-        .form-group { margin-bottom: 12px; text-align: left; }
-        .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
         .form-group input, .form-group select {
-            width: 100%; padding: 8px 10px; background: #fff; border: 1px solid #ced4da; color: var(--text-main); border-radius: 6px; font-size: 0.85rem; transition: 0.2s;
+            width: 100%; padding: 12px; background: #fff; border: 1px solid #b8bcc2; color: var(--text-main); border-radius: 6px; font-size: 1rem; transition: 0.2s;
         }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 5px var(--gold-glow); }
         
         .action-btn {
-            width: 100%; padding: 10px; background: var(--gold); border: none; color: #fff; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.2s;
+            width: 100%; padding: 12px; background: var(--gold); border: none; color: #fff; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 1rem; transition: 0.2s;
         }
         .action-btn:hover { background: #aa842c; }
 
         /* Data Sheets Engine */
-        .main-view { padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        .main-view { padding: 30px; display: flex; flex-direction: column; gap: 25px; }
         
         /* Company Selection Dropdown bar */
         .company-selector-card {
-            background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            background: var(--card-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.01);
         }
         .company-dropdown {
-            padding: 8px 12px; background: #fff; color: var(--gold); font-weight: bold; border: 2px solid var(--gold); border-radius: 6px; min-width: 220px; font-size: 0.9rem; outline: none; cursor: pointer;
+            padding: 10px 15px; background: #fff; color: var(--gold); font-weight: bold; border: 2px solid var(--gold); border-radius: 6px; min-width: 280px; font-size: 1.1rem; outline: none; cursor: pointer;
         }
 
-        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); }
-        .card-header-title { font-size: 0.95rem; color: var(--gold); font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); }
+        .card-header-title { font-size: 1.15rem; color: var(--gold); font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
 
         /* Employee Grid List */
-        .employee-list-group { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; }
+        .employee-list-group { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
         .employee-item-row {
-            background: var(--sidebar-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
+            background: var(--sidebar-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; font-size: 1.05rem;
         }
         .employee-item-row:hover, .employee-item-row.active { border-color: var(--gold); background: #fdfbf7; }
 
         /* Data Tables */
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th { background: #f8f9fa; color: var(--text-muted); padding: 12px 10px; font-weight: 600; border-bottom: 2px solid var(--border-color); text-align: left; }
-        td { padding: 12px 10px; border-bottom: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+        th { background: #f8f9fa; color: var(--text-main); padding: 15px 12px; font-weight: 700; border-bottom: 2px solid var(--border-color); text-align: left; }
+        td { padding: 15px 12px; border-bottom: 1px solid var(--border-color); color: #1e2022; }
         tr:hover { background: #fafafa; }
         
         /* Clear Badges */
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .badge { padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
         .bg-active { background: #e8f5e9; color: var(--success); }
-        .bg-expiring { background: #fff8e1; color: #b7791f; }
+        .bg-expiring { background: #fff8e1; color: var(--warning); }
         .bg-expired { background: #ffebee; color: var(--danger); }
 
-        .trash-icon-btn { background: none; border: none; color: #ff4a4a; cursor: pointer; font-size: 0.85rem; }
-        .trash-icon-btn:hover { color: #ff8888; }
-
         /* Footer */
-        .footer { background: #fff; border-top: 1px solid var(--border-color); padding: 15px; text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: auto; }
+        .footer { background: #fff; border-top: 1px solid var(--border-color); padding: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: auto; }
     </style>
 </head>
 <body>
@@ -119,10 +116,10 @@
     <!-- LOGIN SCREEN OVERLAY -->
     <div id="loginSection" class="login-overlay">
         <div class="login-box">
-            <div style="font-size: 2.5rem; color: var(--gold); margin-bottom: 10px;"><i class="fa-solid fa-lock-shield"></i></div>
+            <div style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"><i class="fa-solid fa-lock-shield"></i></div>
             <h1>ATAVA DIGITAL SERVICES</h1>
             <p>Secure Portal Login</p>
-            <div id="loginError" style="color: var(--danger); font-size: 0.8rem; margin-bottom: 10px; display: none; font-weight: bold;">ലോഗിൻ വിവരങ്ങൾ തെറ്റാണ്!</div>
+            <div id="loginError" style="color: var(--danger); font-size: 0.95rem; margin-bottom: 15px; display: none; font-weight: bold;">ലോഗിൻ വിവരങ്ങൾ തെറ്റാണ്!</div>
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" id="usernameInput" placeholder="Enter username">
@@ -131,11 +128,11 @@
                 <label>Password</label>
                 <input type="password" id="passwordInput" placeholder="Enter password">
             </div>
-            <button class="action-btn" onclick="checkLogin()">SECURE LOGIN</button>
+            <button class="action-btn" style="padding: 14px;" onclick="checkLogin()">SECURE LOGIN</button>
         </div>
     </div>
 
-    <!-- MAIN APP STRUCTURE (Visible only after successful verification) -->
+    <!-- MAIN APP STRUCTURE -->
     <div id="appHeader" style="display: none;">
         <div class="top-navbar">
             <div class="brand-zone">
@@ -145,82 +142,58 @@
             <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-power-off"></i> Logout</button>
         </div>
         <div class="quick-summary-bar">
-            <div class="summary-item"><i class="fa-solid fa-chart-line" style="color:var(--gold)"></i> ലിങ്കിലെ ആകെ രേഖകൾ: <span id="total-docs-count">0</span></div>
+            <div class="summary-item"><i class="fa-solid fa-chart-line" style="color:var(--gold)"></i> ആകെ രേഖകൾ: <span id="total-docs-count">0</span></div>
             <div class="summary-item warn"><i class="fa-solid fa-triangle-exclamation"></i> കാലാവധി തീരാറായവ: <span id="total-warn-count">0</span></div>
             <div class="summary-item exp"><i class="fa-solid fa-circle-exclamation"></i> കാലാവധി കഴിഞ്ഞവ: <span id="total-exp-count">0</span></div>
         </div>
     </div>
 
     <div id="appWorkspace" class="workspace">
-        <!-- Sidebar Controls -->
+        <!-- Sidebar Controls (ഫോം ഫീൽഡുകൾ മാത്രം, ഇതിലൂടെ താല്കാലികമായി ആഡ് ചെയ്ത് ടെസ്റ്റ് ചെയ്യാം) -->
         <div class="sidebar">
-            <!-- 1. Add Company Info -->
             <div class="content-card" style="padding: 15px; box-shadow: none;">
-                <div class="card-header-title" style="font-size: 0.85rem; margin-bottom: 10px;"><i class="fa-solid fa-folder-plus"></i> പുതിയ കമ്പനി ചേർക്കുക</div>
+                <div class="card-header-title" style="font-size: 1rem; margin-bottom: 10px;"><i class="fa-solid fa-folder-plus"></i> താൽക്കാലികമായി ചേർക്കാൻ</div>
+                <p style="font-size: 0.85rem; color: var(--danger); margin-bottom: 10px; line-height: 1.3;">⚠️ ശ്രദ്ധിക്കുക: ഇതിലൂടെ ആഡ് ചെയ്യുന്നവ ബ്രൗസർ റീഫ്രഷ് ചെയ്താൽ മാറാൻ സാധ്യതയുണ്ട്. ഡാറ്റ സ്ഥിരമായി നിൽക്കാൻ കോഡിനുള്ളിൽ നേരിട്ട് എഴുതുക.</p>
+                
                 <div class="form-group">
-                    <label>കമ്പനിയുടെ പേര് (Company Name)</label>
-                    <input type="text" id="newCompanyName" placeholder="e.g. ATAVA Trading">
-                </div>
-                <button class="action-btn" style="padding: 8px;" onclick="addCompany()">ADD COMPANY</button>
-            </div>
-
-            <!-- 2. Add Employee Info -->
-            <div class="content-card" style="padding: 15px; box-shadow: none;">
-                <div class="card-header-title" style="font-size: 0.85rem; margin-bottom: 10px;"><i class="fa-solid fa-user-plus"></i> പുതിയ ജീവനക്കാരൻ</div>
-                <div class="form-group">
-                    <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
-                    <select id="empTargetCompany"></select>
-                </div>
-                <div class="form-group">
-                    <label>ജീവനക്കാരന്റെ പേര് (Employee Name)</label>
+                    <label>ജീവനക്കാരന്റെ പേര്</label>
                     <input type="text" id="newEmployeeName" placeholder="e.g. Rahul Kumar">
                 </div>
-                <button class="action-btn" style="padding: 8px;" onclick="addEmployee()">ADD EMPLOYEE</button>
-            </div>
-            
-            <!-- 3. Add Document Expiries -->
-            <div class="content-card" style="padding: 15px; box-shadow: none;">
-                <div class="card-header-title" style="font-size: 0.85rem; margin-bottom: 10px;"><i class="fa-solid fa-calendar-plus"></i> തിയതികൾ ചേർക്കുക</div>
-                <div class="form-group">
-                    <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
-                    <select id="docTargetCompany" onchange="populateEmployeeDropdownForForm()"></select>
-                </div>
-                <div class="form-group">
-                    <label>വിഭാഗം (Category)</label>
+                <button class="action-btn" style="padding: 8px; font-size:0.9rem;" onclick="addEmployee()">ADD EMPLOYEE</button>
+                
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>വിഭാഗം</label>
                     <select id="docCategory" onchange="toggleFormType()">
                         <option value="Company">Company Document</option>
                         <option value="Employee">Employee Document</option>
                     </select>
                 </div>
                 <div class="form-group" id="empSelectWrapper" style="display: none;">
-                    <label>ജീവനക്കാരൻ (Select Employee)</label>
+                    <label>ജീവനക്കാരൻ</label>
                     <select id="docTargetEmployee"></select>
                 </div>
                 <div class="form-group">
-                    <label>രേഖയുടെ ഇനം (Doc Type)</label>
+                    <label>രേഖയുടെ ഇനം</label>
                     <select id="documentTypeName"></select>
                 </div>
                 <div class="form-group">
-                    <label>expiry date</label>
+                    <label>Expiry Date</label>
                     <input type="date" id="expiryDate">
                 </div>
-                <button class="action-btn" style="padding: 8px;" onclick="addDocument()">SAVE DATE</button>
+                <button class="action-btn" style="padding: 8px; font-size:0.9rem;" onclick="addDocument()">SAVE DATE</button>
             </div>
         </div>
 
         <!-- Main View Workspace -->
         <div class="main-view">
-            
-            <!-- Dynamic Global Company Switcher for Customer -->
+            <!-- Dynamic Global Company Switcher -->
             <div class="company-selector-card">
-                <span style="font-weight: bold; font-size: 0.9rem; color: var(--text-main);"><i class="fa-solid fa-building" style="color:var(--gold)"></i> കമ്പനി തിരഞ്ഞെടുക്കുക:</span>
-                <select id="globalCompanySelector" class="company-dropdown" onchange="syncWorkspaceDisplay()">
-                    <!-- Loaded Dynamically -->
-                </select>
+                <span style="font-weight: bold; font-size: 1.1rem; color: var(--text-main);"><i class="fa-solid fa-building" style="color:var(--gold)"></i> കമ്പനി തിരഞ്ഞെടുക്കുക:</span>
+                <select id="globalCompanySelector" class="company-dropdown" onchange="syncWorkspaceDisplay()"></select>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <!-- Box 1: Selected Company Profile Docs -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                <!-- Box 1: Company Profile Docs -->
                 <div class="content-card">
                     <div class="card-header-title"><i class="fa-solid fa-building-shield"></i> കമ്പനി ലൈസൻസുകൾ / രേഖകൾ</div>
                     <table>
@@ -229,14 +202,13 @@
                                 <th>Document Type</th>
                                 <th>Expiry Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="companyDocsTable"></tbody>
                     </table>
                 </div>
 
-                <!-- Box 2: Employees List of Selected Company -->
+                <!-- Box 2: Employees List -->
                 <div class="content-card">
                     <div class="card-header-title"><i class="fa-solid fa-users-gears"></i> ജീവനക്കാരുടെ പട്ടിക</div>
                     <div class="employee-list-group" id="employeeListContainer"></div>
@@ -245,7 +217,7 @@
 
             <!-- Deep Dive Selected Employee Window -->
             <div class="content-card" id="employeeDeepDive" style="display: none;">
-                <div class="card-header-title" style="color: var(--text-main);"><i class="fa-solid fa-id-card-clip" style="color:var(--gold)"></i> <span id="selectedEmpNameHeader">--</span> -ന്റെ വ്യക്തിഗത രേഖകൾ</div>
+                <div class="card-header-title" style="color: var(--text-main); font-size: 1.2rem;"><i class="fa-solid fa-id-card-clip" style="color:var(--gold)"></i> <span id="selectedEmpNameHeader">--</span> -ന്റെ വ്യക്തിഗത രേഖകൾ</div>
                 <table>
                     <thead>
                         <tr>
@@ -253,7 +225,6 @@
                             <th>Expiry Date</th>
                             <th>Days Left</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="employeeDocsTable"></tbody>
@@ -264,29 +235,57 @@
 
     <!-- Footer System -->
     <div class="footer">
-        <div style="color:var(--gold); font-weight:bold; margin-bottom:2px;">ATAVA DIGITAL SERVICES & TRADING</div>
+        <div style="color:var(--gold); font-weight:bold; margin-bottom:5px; font-size: 1.1rem;">ATAVA DIGITAL SERVICES & TRADING</div>
         <div>Data Entry • UAE Document Expiry Tracker Architecture</div>
     </div>
 
 <script>
-    // ==========================================
-    // 🔒 ഈ ഒരൊറ്റ കസ്റ്റമറുടെ ലിങ്കിന്റെ മെയിൻ സുരക്ഷാ ലോഗിൻ:
-    // ==========================================
+    // ========================================================
+    // 🔒 1. സുരക്ഷാ ലോഗിൻ വിവരങ്ങൾ ഇവിടെ മാറ്റാം
+    // ========================================================
     const AUTH_CONFIG = {
-        username: "atavautil",          // കസ്റ്റമറുടെ യൂസർനെയിം
-        password: "atavapassword"       // കസ്റ്റമറുടെ പാസ്‌വേർഡ്
+        username: "atavautil",          
+        password: "atavapassword"       
     };
+
+    // ========================================================
+    // 📂 2. കസ്റ്റമറുടെ കമ്പനികളും അവരുടെ ഡാറ്റയും ഇവിടെ സ്ഥിരമായി എഴുതി വെക്കാം (HARDCODED DATABASE)
+    // ========================================================
+    // നീ ഇവിടെ എഴുതി ചേർക്കുന്ന വിവരങ്ങൾ കസ്റ്റമർ ഹിസ്റ്ററി ക്ലിയർ ചെയ്താലും ഒരിക്കലും നഷ്ടപ്പെടില്ല!
+    // ഞാൻ താഴെ മാതൃകയ്ക്ക് വേണ്ടി കുറച്ച് ഡാറ്റ ഇട്ടിട്ടുണ്ട്. ഇത് നിനക്ക് മാറ്റി എഴുതാം.
+
+    let database = {
+        // എ) കമ്പനികളുടെ പേര് ഇവിടെ കൊടുക്കുക
+        companies: [
+            { id: "comp_1", name: "ATAVA TRADING CO" },
+            { id: "comp_2", name: "ATAVA RESTAURANT" }
+        ],   
+        
+        // ബി) ജീവനക്കാരുടെ പേര് ഏത് കമ്പനിയിലാണെന്ന് നോക്കി ഇവിടെ കൊടുക്കുക
+        employees: [
+            { id: "emp_1", companyId: "comp_1", name: "Rahul Kumar" },
+            { id: "emp_2", companyId: "comp_1", name: "Anas Yousuf" },
+            { id: "emp_3", companyId: "comp_2", name: "John Doe" }
+        ],   
+        
+        // സി) ഡോക്യുമെന്റുകളുടെ തിയതികൾ ഇവിടെ കൊടുക്കുക
+        // employeeId: null എന്ന് കൊടുത്താൽ അത് കമ്പനിയുടെ സ്വന്തം ഡോക്യുമെന്റ് (ഉദാഹരണത്തിന് Trade License) ആയി മാറും.
+        documents: [
+            { id: "doc_1", companyId: "comp_1", employeeId: null, type: "Trade License", expiryDate: "2026-08-12" },
+            { id: "doc_2", companyId: "comp_1", employeeId: null, type: "E-Channel", expiryDate: "2026-05-20" },
+            { id: "doc_3", companyId: "comp_1", employeeId: "emp_1", type: "Emirates-ID", expiryDate: "2027-01-15" },
+            { id: "doc_4", companyId: "comp_1", employeeId: "emp_2", type: "Passport Pack", expiryDate: "2026-07-02" },
+            { id: "doc_5", companyId: "comp_2", employeeId: null, type: "Trade License", expiryDate: "2026-12-30" },
+            { id: "doc_6", companyId: "comp_2", employeeId: "emp_3", type: "Labour Card", expiryDate: "2026-06-25" }
+        ]    
+    };
+
+    // ========================================================
+    // താഴോട്ടുള്ള കോഡുകൾ ആപ്പ് വർക്ക് ചെയ്യിക്കാനുള്ളതാണ്, മാറ്റങ്ങൾ വരുത്തേണ്ടതില്ല.
+    // ========================================================
 
     const baseCompanyDocTypes = ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy Contract", "FTA Registration"];
     const baseEmployeeDocTypes = ["Emirates-ID", "Passport Pack", "Labour Card", "ILOE Insurance Scheme"];
-
-    // ഈ കസ്റ്റമറുടെ കീഴിലുള്ള മുഴുവൻ കമ്പനികളുടെയും റിലേഷണൽ ഡാറ്റാബേസ്
-    let database = JSON.parse(localStorage.getItem('atava_customer_link_db')) || {
-        companies: [],   
-        employees: [],   
-        documents: []    
-    };
-
     let activeEmployeeId = null;
 
     function checkLogin() {
@@ -299,7 +298,6 @@
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('appHeader').style.display = 'block';
             document.getElementById('appWorkspace').style.display = 'grid';
-            
             initApp();
         } else {
             err.style.display = 'block';
@@ -321,28 +319,14 @@
         syncWorkspaceDisplay();
     }
 
-    function addCompany() {
-        const nameInput = document.getElementById('newCompanyName');
-        if(!nameInput.value.trim()) return alert("കമ്പനിയുടെ പേര് ടൈപ്പ് ചെയ്യുക!");
-        
-        const comp = { id: 'c_' + Date.now(), name: nameInput.value.trim() };
-        database.companies.push(comp);
-        saveState();
-        nameInput.value = '';
-        syncDropdownConfigurations();
-        document.getElementById('globalCompanySelector').value = comp.id;
-        syncWorkspaceDisplay();
-    }
-
     function addEmployee() {
-        const targetComp = document.getElementById('empTargetCompany').value;
+        const targetComp = document.getElementById('globalCompanySelector').value;
         const nameInput = document.getElementById('newEmployeeName');
         if(!targetComp) return alert("ദയവായി ഒരു കമ്പനി നിർമ്മിക്കുക/തിരഞ്ഞെടുക്കുക");
         if(!nameInput.value.trim()) return alert("ജീവനക്കാരന്റെ പേര് ടൈപ്പ് ചെയ്യുക!");
 
-        const emp = { id: 'e_' + Date.now(), companyId: targetComp, name: nameInput.value.trim() };
+        const emp = { id: 'temp_e_' + Date.now(), companyId: targetComp, name: nameInput.value.trim() };
         database.employees.push(emp);
-        saveState();
         nameInput.value = '';
         syncWorkspaceDisplay();
         populateEmployeeDropdownForForm();
@@ -363,7 +347,7 @@
     }
 
     function populateEmployeeDropdownForForm() {
-        const compId = document.getElementById('docTargetCompany').value;
+        const compId = document.getElementById('globalCompanySelector').value;
         const select = document.getElementById('docTargetEmployee');
         select.innerHTML = '';
         const filtered = database.employees.filter(e => e.companyId === compId);
@@ -373,7 +357,7 @@
     }
 
     function addDocument() {
-        const compId = document.getElementById('docTargetCompany').value;
+        const compId = document.getElementById('globalCompanySelector').value;
         const cat = document.getElementById('docCategory').value;
         const empId = (cat === 'Employee') ? document.getElementById('docTargetEmployee').value : null;
         const expiry = document.getElementById('expiryDate').value;
@@ -383,7 +367,7 @@
         if(cat === 'Employee' && !empId) return alert("ആദ്യം ഈ കമ്പനിയിൽ ഒരു ജീവനക്കാരനെ ആഡ് ചെയ്യുക!");
 
         const doc = {
-            id: 'd_' + Date.now(),
+            id: 'temp_d_' + Date.now(),
             companyId: compId,
             employeeId: empId,
             type: document.getElementById('documentTypeName').value,
@@ -391,49 +375,23 @@
         };
 
         database.documents.push(doc);
-        saveState();
         document.getElementById('expiryDate').value = '';
-        syncWorkspaceDisplay();
-    }
-
-    function deleteDocument(id) {
-        if(confirm("ഈ രേഖ സിസ്റ്റത്തിൽ നിന്നും നീക്കം ചെയ്യണോ?")) {
-            database.documents = database.documents.filter(d => d.id !== id);
-            saveState();
-            syncWorkspaceDisplay();
-        }
-    }
-
-    function saveState() {
-        localStorage.setItem('atava_customer_link_db', JSON.stringify(database));
         calculateGlobalStats();
+        syncWorkspaceDisplay();
     }
 
     function syncDropdownConfigurations() {
         const globalSel = document.getElementById('globalCompanySelector');
-        const empTarget = document.getElementById('empTargetCompany');
-        const docTarget = document.getElementById('docTargetCompany');
-        const currentSelection = globalSel.value;
-
         globalSel.innerHTML = '';
-        empTarget.innerHTML = '';
-        docTarget.innerHTML = '';
 
         if(database.companies.length === 0) {
-            globalSel.innerHTML = '<option value="">-- No Companies Added --</option>';
+            globalSel.innerHTML = '<option value="">-- No Companies --</option>';
             return;
         }
 
         database.companies.sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
-            const opt = `<option value="${c.id}">${c.name}</option>`;
-            globalSel.innerHTML += opt;
-            empTarget.innerHTML += opt;
-            docTarget.innerHTML += opt;
+            globalSel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
         });
-
-        if(currentSelection && database.companies.some(c => c.id === currentSelection)) {
-            globalSel.value = currentSelection;
-        }
         populateEmployeeDropdownForForm();
     }
 
@@ -466,7 +424,7 @@
         const today = new Date();
         today.setHours(0,0,0,0);
 
-        // 1. Load Selected Company Specific Profile Corporate Docs
+        // 1. Load Company Docs
         const corpDocs = database.documents.filter(d => d.companyId === activeCompanyId && d.employeeId === null);
         corpDocs.sort((a,b) => new Date(a.expiryDate) - new Date(b.expiryDate)).forEach(d => {
             const diff = Math.ceil((new Date(d.expiryDate).setHours(0,0,0,0) - today) / (1000*60*60*24));
@@ -475,15 +433,14 @@
             else if(diff <= 30) badge = `<span class="badge bg-expiring">Expiring</span>`;
 
             compTable.innerHTML += `<tr>
-                <td style="font-weight:600; color:var(--text-main);">${d.type}</td>
-                <td>${d.expiryDate}</td>
+                <td style="font-weight:700; color:var(--text-main);">${d.type}</td>
+                <td style="font-weight:600;">${d.expiryDate}</td>
                 <td>${badge}</td>
-                <td><button class="trash-icon-btn" onclick="deleteDocument('${d.id}')"><i class="fa-solid fa-trash"></i></button></td>
             </tr>`;
         });
-        if(corpDocs.length === 0) compTable.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">രേഖകൾ ഒന്നുമില്ല</td></tr>';
+        if(corpDocs.length === 0) compTable.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">രേഖകൾ ഒന്നുമില്ല</td></tr>';
 
-        // 2. Load Selected Company Employees List
+        // 2. Load Employees
         const currentEmployees = database.employees.filter(e => e.companyId === activeCompanyId);
         currentEmployees.sort((a,b) => a.name.localeCompare(b.name)).forEach(e => {
             const empDocs = database.documents.filter(d => d.employeeId === e.id);
@@ -495,21 +452,22 @@
                 return diff >= 0 && diff <= (30*24*60*60*1000);
             });
 
-            if(hasExpired) stateIcon = '<i class="fa-solid fa-circle-exclamation" style="color:var(--danger)"></i>';
-            else if(hasWarning) stateIcon = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--warning)"></i>';
+            if(hasExpired) stateIcon = '<i class="fa-solid fa-circle-exclamation" style="color:var(--danger); font-size:1.2rem;"></i>';
+            else if(hasWarning) stateIcon = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--warning); font-size:1.2rem;"></i>';
 
             const activeClass = (activeEmployeeId === e.id) ? 'active' : '';
 
             empContainer.innerHTML += `<div class="employee-item-row ${activeClass}" onclick="openEmployeeDeepDive('${e.id}', '${e.name.replace(/'/g, "\\'")}')">
-                <span style="font-weight:600;"><i class="fa-solid fa-user-tie" style="color:var(--text-muted); margin-right:8px;"></i> ${e.name}</span>
+                <span style="font-weight:700;"><i class="fa-solid fa-user-tie" style="color:var(--text-muted); margin-right:8px;"></i> ${e.name}</span>
                 <div>
-                    <span style="font-size:0.75rem; color:var(--text-muted); margin-right:10px;">(${empDocs.length} Dates)</span>
+                    <span style="font-size:0.9rem; color:var(--text-muted); margin-right:10px;">(${empDocs.length} Dates)</span>
                     ${stateIcon}
                 </div>
             </div>`;
         });
-        if(currentEmployees.length === 0) empContainer.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:20px;">ജീവനക്കാരെ ആഡ് ചെയ്തിട്ടില്ല</div>';
+        if(currentEmployees.length === 0) empContainer.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:20px;">জীവനക്കാരെ ആഡ് ചെയ്തിട്ടില്ല</div>';
 
+        populateEmployeeDropdownForForm();
         updateEmployeeDeepDiveTable();
     }
 
@@ -548,15 +506,14 @@
 
             tbody.innerHTML += `<tr>
                 <td style="font-weight:bold; color:var(--gold);">${d.type}</td>
-                <td>${d.expiryDate}</td>
-                <td style="font-weight:bold; color: ${diff < 0 ? 'var(--danger)' : (diff <= 30 ? 'var(--warning)' : 'var(--text-main)')}">${dayText}</td>
+                <td style="font-weight:600;">${d.expiryDate}</td>
+                <td style="font-weight:bold; color: ${diff < 0 ? 'var(--danger)' : (diff <= 30 ? 'var(--warning)' : '#1e2022')}">${dayText}</td>
                 <td>${badge}</td>
-                <td><button class="trash-icon-btn" onclick="deleteDocument('${d.id}')"><i class="fa-solid fa-trash"></i></button></td>
             </tr>`;
         });
 
         if(targetDocs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">ഈ ജീവനക്കാരന് കീഴിൽ തിയതികൾ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല!</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">ഈ ജീവനക്കാരന് കീഴിൽ തിയതികൾ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല!</td></tr>';
         }
     }
 </script>
