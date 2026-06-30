@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #ffffff; /* നീ പറഞ്ഞതുപോലെ പക്കാ വൈറ്റ് ബാക്ക്ഗ്രൗണ്ട് */
+            --bg-color: #ffffff; /* പക്കാ വൈറ്റ് ബാക്ക്ഗ്രൗണ്ട് */
             --card-bg: #ffffff;
             --sidebar-bg: #f8f9fa;
             --gold: #c5a03b;
@@ -25,19 +25,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; font-size: 1.1rem; line-height: 1.5; }
 
-        /* Login Screen */
-        .login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #f4f6f9; display: flex; justify-content: center; align-items: center; z-index: 1000;
-        }
-        .login-box {
-            background: var(--card-bg); padding: 50px; border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08); width: 100%; max-width: 460px;
-            text-align: center; border: 2px solid var(--border-color);
-        }
-        .login-box h1 { color: var(--gold); font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
-        .login-box p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
-
         /* Navbar */
         .top-navbar {
             background: var(--card-bg); border-bottom: 2px solid var(--border-color);
@@ -45,11 +32,9 @@
         }
         .brand-zone h1 { color: var(--gold); font-size: 2rem; font-weight: 900; letter-spacing: 0.5px; }
         .brand-zone p { font-size: 1.1rem; color: var(--text-muted); margin-top: 5px; font-weight: 600; }
-        .logout-btn { background: none; border: 2px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: var(--text-main); }
-        .logout-btn:hover { color: var(--danger); border-color: var(--danger); }
 
         /* Workspace Grid */
-        .workspace { display: grid; grid-template-columns: 380px 1fr; gap: 30px; padding: 35px; display: none; }
+        .workspace { display: grid; grid-template-columns: 380px 1fr; gap: 30px; padding: 35px; }
         @media (max-width: 1200px) { .workspace { grid-template-columns: 1fr; } }
 
         .management-sidebar { display: flex; flex-direction: column; gap: 25px; }
@@ -129,38 +114,18 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
-    <div id="loginSection" class="login-overlay">
-        <div class="login-box">
-            <div style="font-size: 4rem; color: var(--gold); margin-bottom: 20px;"><i class="fa-solid fa-shield-halved"></i></div>
-            <h1>ATAVA DIGITAL SERVICES</h1>
-            <p>Secure Portal Login</p>
-            <div id="loginError" style="color: var(--danger); font-size: 1.1rem; margin-bottom: 20px; display: none; font-weight: bold;">ലോഗിൻ വിവരങ്ങൾ തെറ്റാണ്!</div>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="usernameInput" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="passwordInput" placeholder="Enter password">
-            </div>
-            <button class="action-btn" style="padding: 16px; font-size: 1.2rem;" onclick="checkLogin()">SECURE LOGIN</button>
-        </div>
-    </div>
-
-    <!-- NAVBAR -->
-    <div id="appHeader" style="display: none;">
+    <!-- NAVBAR (ലോഗ്ഔട്ട് ബട്ടൺ ഒഴിവാക്കി) -->
+    <div>
         <div class="top-navbar">
             <div class="brand-zone">
                 <h1>ATAVA DIGITAL SERVICES & TRADING</h1>
                 <p>Corporate Renewal & Visa Expiry Ledger Matrix</p>
             </div>
-            <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-power-off"></i> Logout</button>
         </div>
     </div>
 
     <!-- MAIN GRID CONTAINER -->
-    <div id="appWorkspace" class="workspace">
+    <div class="workspace">
         
         <!-- SIDEBAR FOR MANAGEMENT -->
         <div class="management-sidebar">
@@ -177,7 +142,7 @@
 
             <!-- 2. പുതിയ ജീവനക്കാരെ ചേർക്കാൻ -->
             <div class="content-card" style="padding: 20px;">
-                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-user-plus"></i> പുതിയ ജീവനക്കാർ</div>
+                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-user-plus"></i> புதிய ജീവനക്കാർ</div>
                 <div class="form-group">
                     <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
                     <select id="formCompanySelector"></select>
@@ -189,7 +154,7 @@
                 <button class="action-btn" onclick="addNewEmployeeBtn()">ADD EMPLOYEE</button>
             </div>
 
-            <!-- 🔥 3. കസ്റ്റം രേഖകളുടെ ഇനം ആഡ് ചെയ്യാൻ (നീ ചോദിച്ച ഫീച്ചർ) -->
+            <!-- 3. കസ്റ്റം രേഖകളുടെ ഇനം ആഡ് ചെയ്യാൻ -->
             <div class="content-card" style="padding: 20px;">
                 <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--purple-accent);"><i class="fa-solid fa-tags"></i> കസ്റ്റം രേഖകളുടെ ഇനം ചേർക്കുക</div>
                 <div class="form-group">
@@ -316,13 +281,8 @@
     </div>
 
 <script>
-    const AUTH_CONFIG = {
-        username: "atavautil",          
-        password: "atavapassword"       
-    };
-
     // =========================================================================================
-    // 📂 ഡാറ്റാബേസ് സിസ്റ്റം (ഇപ്പോൾ കസ്റ്റം ടൈപ്പുകളും ഇതിലേക്ക് തനിയെ സേവ് ആകും!)
+    // 📂 ഡാറ്റാബേസ് സിസ്റ്റം
     // =========================================================================================
     let database = {
         companies: [
@@ -342,7 +302,6 @@
             { id: "doc_5", companyId: "comp_2", employeeId: null, type: "Trade License", expiryDate: "2026-12-30" },
             { id: "doc_6", companyId: "comp_2", employeeId: "emp_3", type: "Labour Card", expiryDate: "2026-06-25" }
         ],
-        // കസ്റ്റം ടൈപ്പുകൾ സൂക്ഷിക്കാൻ പുതിയ അറേ വെച്ചിട്ടുണ്ട്![cite: 1]
         customCompanyDocTypes: ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy Contract", "FTA Registration"],
         customEmployeeDocTypes: ["Emirates-ID", "Passport Pack", "Labour Card", "ILOE Insurance Scheme"]
     };
@@ -350,29 +309,10 @@
     let activeEmployeeId = null;
     let currentCardFilter = null; 
 
-    function checkLogin() {
-        const u = document.getElementById('usernameInput').value;
-        const p = document.getElementById('passwordInput').value;
-        const err = document.getElementById('loginError');
-
-        if(u === AUTH_CONFIG.username && p === AUTH_CONFIG.password) {
-            err.style.display = 'none';
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('appHeader').style.display = 'block';
-            document.getElementById('appWorkspace').style.display = 'grid';
-            initApp();
-        } else {
-            err.style.display = 'block';
-        }
-    }
-
-    function logout() {
-        document.getElementById('usernameInput').value = '';
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('loginSection').style.display = 'flex';
-        document.getElementById('appHeader').style.display = 'none';
-        document.getElementById('appWorkspace').style.display = 'none';
-    }
+    // പേജ് ലോഡ് ചെയ്യുമ്പോൾ തന്നെ നേരിട്ട് ആപ്പിലേക്ക് കയറാൻ (Direct Run)[cite: 1]
+    window.onload = function() {
+        initApp();
+    };
 
     function initApp() {
         syncDropdownConfigurations();
@@ -382,7 +322,6 @@
         updateRawExporter();
     }
 
-    // 🔥 പുതിയ കസ്റ്റം ഡോക്യുമെന്റ് ടൈപ്പ് ചേർക്കാനുള്ള ഫങ്ക്ഷൻ (നീ ഉദ്ദേശിച്ച ഫീച്ചർ)[cite: 1]
     function addCustomDocTypeBtn() {
         const cat = document.getElementById('customDocCategory').value;
         const typeName = document.getElementById('customDocTypeName').value.trim();
@@ -399,7 +338,7 @@
         toggleFormCategoryFields();
         buildInteractiveDashboards();
         updateRawExporter();
-        alert(`"${typeName}" എന്ന പുതിയ രേഖ വിജയകരമായി കാറ്റഗറിയിൽ ചേർത്തു![cite: 1]`);
+        alert(`"${typeName}" എന്ന പുതിയ രേഖ വിജയകരമായി കാറ്റഗറിയിൽ ചേർത്തു!`);
     }
 
     function addNewCompanyBtn() {
