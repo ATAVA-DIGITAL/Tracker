@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #ffffff; /* പക്കാ വൈറ്റ് ബാക്ക്ഗ്രൗണ്ട് */
+            --bg-color: #ffffff; 
             --card-bg: #ffffff;
             --sidebar-bg: #f8f9fa;
             --gold: #c5a03b;
@@ -108,13 +108,11 @@
         }
         .action-btn:hover { background: #aa842c; }
 
-        .export-box { background: #1e1e24; color: #fff; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; max-height: 150px; overflow-y: auto; white-space: pre-wrap; margin-top: 10px; border: 1px solid #444; }
         .footer { background: #fff; border-top: 2px solid var(--border-color); padding: 30px; text-align: center; font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-top: auto; }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR (ലോഗ്ഔട്ട് ബട്ടൺ ഒഴിവാക്കി) -->
     <div>
         <div class="top-navbar">
             <div class="brand-zone">
@@ -124,13 +122,10 @@
         </div>
     </div>
 
-    <!-- MAIN GRID CONTAINER -->
     <div class="workspace">
         
-        <!-- SIDEBAR FOR MANAGEMENT -->
         <div class="management-sidebar">
             
-            <!-- 1. പുതിയ കമ്പനി ചേർക്കാൻ -->
             <div class="content-card" style="padding: 20px;">
                 <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-folder-plus"></i> പുതിയ കമ്പനി ചേർക്കുക</div>
                 <div class="form-group">
@@ -140,9 +135,8 @@
                 <button class="action-btn" onclick="addNewCompanyBtn()">ADD COMPANY</button>
             </div>
 
-            <!-- 2. പുതിയ ജീവനക്കാരെ ചേർക്കാൻ -->
             <div class="content-card" style="padding: 20px;">
-                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-user-plus"></i> புதிய ജീവനക്കാർ</div>
+                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-user-plus"></i> പുതിയ ജീവനക്കാർ</div>
                 <div class="form-group">
                     <label>കമ്പനി തിരഞ്ഞെടുക്കുക</label>
                     <select id="formCompanySelector"></select>
@@ -154,9 +148,8 @@
                 <button class="action-btn" onclick="addNewEmployeeBtn()">ADD EMPLOYEE</button>
             </div>
 
-            <!-- 3. കസ്റ്റം രേഖകളുടെ ഇനം ആഡ് ചെയ്യാൻ -->
             <div class="content-card" style="padding: 20px;">
-                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--purple-accent);"><i class="fa-solid fa-tags"></i> കസ്റ്റം രേഖകളുടെ ഇനം ചേർക്കുക</div>
+                <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--purple-accent);"><i class="fa-solid fa-tags"></i> രേഖകളുടെ ഇനം (Doc Type) സൃഷ്ടിക്കുക</div>
                 <div class="form-group">
                     <label>ഏത് വിഭാഗം? (Select Category)</label>
                     <select id="customDocCategory">
@@ -166,12 +159,11 @@
                 </div>
                 <div class="form-group">
                     <label>രേഖയുടെ പേര് (Document Type Name)</label>
-                    <input type="text" id="customDocTypeName" placeholder="e.g. Mulkiya, Civil Defence">
+                    <input type="text" id="customDocTypeName" placeholder="e.g. Trade License, Emirates ID">
                 </div>
-                <button class="action-btn" style="background: var(--purple-accent);" onclick="addCustomDocTypeBtn()">ADD DOC TYPE</button>
+                <button class="action-btn" style="background: var(--purple-accent);" onclick="addCustomDocTypeBtn()">CREATE DOC TYPE</button>
             </div>
 
-            <!-- 4. തിയതികൾ റെക്കോർഡ് ചെയ്യാൻ -->
             <div class="content-card" style="padding: 20px;">
                 <div class="card-header-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--blue-accent);"><i class="fa-solid fa-calendar-plus"></i> തിയതികൾ ചേർക്കുക</div>
                 <div class="form-group">
@@ -199,19 +191,10 @@
                 </div>
                 <button class="action-btn" onclick="addNewDocumentBtn()">SAVE DATE</button>
             </div>
-
-            <!-- 5. കോഡ് കോപ്പി ബോക്സ് -->
-            <div class="content-card" style="padding: 15px;">
-                <div class="card-header-title" style="font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-code"></i> Live Database Exporter</div>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">നീ ലൈവ് ആയി ആഡ് ചെയ്യുന്ന പുതിയ വിവരങ്ങളും ഡോക്യുമെന്റുകളും സ്ഥിരമായി സേവ് ചെയ്യാൻ താഴെയുള്ള കോഡ് കോപ്പി ചെയ്ത് ഗിറ്റ്ഹബ്ബിൽ പേസ്റ്റ് ചെയ്യുക.</p>
-                <div class="export-box" id="databaseRawExport"></div>
-            </div>
         </div>
 
-        <!-- RIGHT SIDE: DASHBOARDS AND TABLES -->
         <div class="main-display-area">
             
-            <!-- INTERACTIVE DASHBOARD MATRIX -->
             <div>
                 <div class="section-title"><i class="fa-solid fa-chart-pie"></i> Companies Dashboard</div>
                 <div class="dashboard-grid" id="company-dash-grid"></div>
@@ -220,7 +203,6 @@
                 <div class="dashboard-grid" id="employee-dash-grid"></div>
             </div>
 
-            <!-- GLOBAL SELECTOR DROPDOWN -->
             <div class="filter-row">
                 <div>
                     <span style="font-weight: 800; font-size: 1.2rem;"><i class="fa-solid fa-building" style="color:var(--gold)"></i> കമ്പനി തിരഞ്ഞെടുക്കുക:</span>
@@ -231,9 +213,7 @@
                 </div>
             </div>
 
-            <!-- DATA MATRIX ZONE -->
             <div class="data-split-zone">
-                <!-- Company Licences Table -->
                 <div class="content-card">
                     <div class="card-header-title" id="compDocsTitle"><i class="fa-solid fa-building-shield"></i> കമ്പനി ലൈസൻസുകൾ / രേഖകൾ</div>
                     <table>
@@ -248,14 +228,12 @@
                     </table>
                 </div>
 
-                <!-- Employees List -->
                 <div class="content-card">
                     <div class="card-header-title"><i class="fa-solid fa-users-gears"></i> ജീവനക്കാരുടെ പട്ടിക</div>
                     <div class="employee-list-group" id="employeeListContainer"></div>
                 </div>
             </div>
 
-            <!-- EMPLOYEE DRILLDOWN -->
             <div class="content-card" id="employeeDeepDive" style="display: none; margin-top: 25px;">
                 <div class="card-header-title" style="font-size: 1.5rem;"><i class="fa-solid fa-id-card-clip" style="color:var(--gold)"></i> <span id="selectedEmpNameHeader">--</span> -ന്റെ വ്യക്തിഗത രേഖകൾ</div>
                 <table>
@@ -274,7 +252,6 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
         <div style="color:var(--gold); font-weight:900; margin-bottom:5px; font-size: 1.3rem;">ATAVA DIGITAL SERVICES & TRADING</div>
         <div>Data Entry • UAE Dynamic Document Expiry Architecture</div>
@@ -282,44 +259,32 @@
 
 <script>
     // =========================================================================================
-    // 📂 ഡാറ്റാബേസ് സിസ്റ്റം
+    // 📂 ഡാറ്റാബേസ് ലോക്കൽ സ്റ്റോറേജ് സിസ്റ്റം (പഴയ ഹാർഡ്കോഡ് ഡാറ്റ പൂർണ്ണമായി ഒഴിവാക്കി)
     // =========================================================================================
-    let database = {
-        companies: [
-            { id: "comp_1", name: "ATAVA TRADING CO" },
-            { id: "comp_2", name: "ATAVA RESTAURANT" }
-        ],   
-        employees: [
-            { id: "emp_1", companyId: "comp_1", name: "Rahul Kumar" },
-            { id: "emp_2", companyId: "comp_1", name: "Anas Yousuf" },
-            { id: "emp_3", companyId: "comp_2", name: "John Doe" }
-        ],   
-        documents: [
-            { id: "doc_1", companyId: "comp_1", employeeId: null, type: "Trade License", expiryDate: "2026-08-12" },
-            { id: "doc_2", companyId: "comp_1", employeeId: null, type: "E-Channel", expiryDate: "2026-05-20" },
-            { id: "doc_3", companyId: "comp_1", employeeId: "emp_1", type: "Emirates-ID", expiryDate: "2027-01-15" },
-            { id: "doc_4", companyId: "comp_1", employeeId: "emp_2", type: "Passport Pack", expiryDate: "2026-07-02" },
-            { id: "doc_5", companyId: "comp_2", employeeId: null, type: "Trade License", expiryDate: "2026-12-30" },
-            { id: "doc_6", companyId: "comp_2", employeeId: "emp_3", type: "Labour Card", expiryDate: "2026-06-25" }
-        ],
-        customCompanyDocTypes: ["Trade License", "E-Channel", "EST Card", "Civil Defence", "Tenancy Contract", "FTA Registration"],
-        customEmployeeDocTypes: ["Emirates-ID", "Passport Pack", "Labour Card", "ILOE Insurance Scheme"]
+    let database = JSON.parse(localStorage.getItem('atava_db')) || {
+        companies: [],   
+        employees: [],   
+        documents: [],
+        customCompanyDocTypes: [], // നീ ലൈവ് ആയി ക്രിയേറ്റ് ചെയ്യുന്നവ മാത്രം ഇവിടെ വരും
+        customEmployeeDocTypes: []
     };
 
     let activeEmployeeId = null;
     let currentCardFilter = null; 
 
-    // പേജ് ലോഡ് ചെയ്യുമ്പോൾ തന്നെ നേരിട്ട് ആപ്പിലേക്ക് കയറാൻ (Direct Run)[cite: 1]
     window.onload = function() {
         initApp();
     };
+
+    function saveToLocalStorage() {
+        localStorage.setItem('atava_db', JSON.stringify(database));
+    }
 
     function initApp() {
         syncDropdownConfigurations();
         toggleFormCategoryFields();
         buildInteractiveDashboards();
         syncWorkspaceDisplay();
-        updateRawExporter();
     }
 
     function addCustomDocTypeBtn() {
@@ -335,10 +300,10 @@
         }
 
         document.getElementById('customDocTypeName').value = '';
+        saveToLocalStorage();
         toggleFormCategoryFields();
         buildInteractiveDashboards();
-        updateRawExporter();
-        alert(`"${typeName}" എന്ന പുതിയ രേഖ വിജയകരമായി കാറ്റഗറിയിൽ ചേർത്തു!`);
+        alert(`"${typeName}" എന്ന പുതിയ ഡോക്യുമെന്റ് ടൈപ്പ് ഡാഷ്‌ബോർഡിലേക്ക് സെറ്റാക്കി!`);
     }
 
     function addNewCompanyBtn() {
@@ -349,11 +314,11 @@
         database.companies.push({ id: newId, name: name });
         document.getElementById('newCompanyName').value = '';
         
+        saveToLocalStorage();
         syncDropdownConfigurations();
         buildInteractiveDashboards();
         syncWorkspaceDisplay();
-        updateRawExporter();
-        alert("പുതിയ കമ്പനി ചേർത്തിരിക്കുന്നു!");
+        alert("പുതിയ കമ്പനി ചേർത്തു!");
     }
 
     function addNewEmployeeBtn() {
@@ -367,9 +332,9 @@
         database.employees.push({ id: newEmpId, companyId: compId, name: empName });
         document.getElementById('newEmployeeName').value = '';
 
+        saveToLocalStorage();
         syncFormEmployeeDropdown();
         syncWorkspaceDisplay();
-        updateRawExporter();
         alert("ജീവനക്കാരനെ വിജയകരമായി ചേർത്തു!");
     }
 
@@ -381,6 +346,7 @@
         const expDate = document.getElementById('expiryDate').value;
 
         if(!compId) return alert("കമ്പനി തിരഞ്ഞെടുക്കുക!");
+        if(!docType) return alert("രേഖയുടെ ഇനം തിരഞ്ഞെടുക്കുക! (ഇല്ലെങ്കിൽ ആദ്യം തൊട്ടുമുകളിൽ ക്രിയേറ്റ് ചെയ്യുക)");
         if(!expDate) return alert("എക്സ്പെയറി തിയതി തിരഞ്ഞെടുക്കുക!");
 
         const newDocId = 'doc_' + Date.now();
@@ -393,10 +359,10 @@
         });
 
         document.getElementById('expiryDate').value = '';
+        saveToLocalStorage();
         buildInteractiveDashboards();
         syncWorkspaceDisplay();
-        updateRawExporter();
-        alert("തിയതി വിജയകരമായി രേഖപ്പെടുത്തി!");
+        alert("തിയതി വിജയകരമായി സേവ് ചെയ്തു!");
     }
 
     function toggleFormCategoryFields() {
@@ -451,6 +417,13 @@
         
         compGrid.innerHTML = '';
         empGrid.innerHTML = '';
+
+        if(database.customCompanyDocTypes.length === 0) {
+            compGrid.innerHTML = `<p style="color:var(--text-muted); font-size:1rem; padding:10px;">രേഖകൾ ഒന്നും ആഡ് ചെയ്തിട്ടില്ല.</p>`;
+        }
+        if(database.customEmployeeDocTypes.length === 0) {
+            empGrid.innerHTML = `<p style="color:var(--text-muted); font-size:1rem; padding:10px;">രേഖകൾ ഒന്നും ആഡ് ചെയ്തിട്ടില്ല.</p>`;
+        }
 
         database.customCompanyDocTypes.forEach(type => {
             let docs = database.documents.filter(d => d.type === type && d.employeeId === null);
@@ -631,11 +604,6 @@
         if(targetDocs.length === 0) {
             tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:15px;">രേഖകൾ ഒന്നും കണ്ടെത്താനായില്ല!</td></tr>';
         }
-    }
-
-    function updateRawExporter() {
-        const targetBlock = document.getElementById('databaseRawExport');
-        targetBlock.innerText = "let database = " + JSON.stringify(database, null, 4) + ";";
     }
 </script>
 </body>
